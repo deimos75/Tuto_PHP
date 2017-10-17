@@ -1,5 +1,5 @@
 <!-- Commentaires -->
-
+<!DOCTYPE html>
 <html>
     <head>
         <title>Blog - Commentaires</title>
@@ -18,7 +18,12 @@
         {
                 die('Erreur : ' . $e->getMessage());
         }
-
+        ?>
+        
+        <h1>Mon super blog</h1>
+        <a href="index.php">Retour à la listes des billets</a>
+        <p>ID: <?php echo $_GET['id'] ?></p>
+        
         
     </body>
 </html>
