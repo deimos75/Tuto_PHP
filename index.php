@@ -1,6 +1,5 @@
 <!-- Index -->
-
-
+<!DOCTYPE html>
 <html>
     <head>
         <title>Blog - Accueil</title>
@@ -12,18 +11,17 @@
         <!-- Connexion à la BDD "blog" -->
         <?php
         try
-        {
-            $bdd = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
+        {   
+            $bdd = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));   
         }
         catch (Exception $e)
         {
                 die('Erreur : ' . $e->getMessage());
         }
-
+         
 
         // On récupère tout le contenu de la table "billets"
-        $reponse = $bdd->query('SELECT * FROM billets ORDER BY titre DESC');
-        //$reponseContenu = $bdd->query('SELECT contenu FROM billets ORDER BY contenu DESC');
+        $requete = $bdd->query('SELECT * FROM billets ORDER BY id DESC');
         ?>
         
         <h1>Mon super blog</h1>
@@ -31,19 +29,18 @@
 
         <?php
         // On affiche chaque entrée une à une
-        while ($donnees = $reponse->fetch()){
+        while ($donnees = $requete->fetch()){
             ?>
                 <div class="news">
                     <h3><?php echo $donnees['titre']; 
-                        echo '<i> le '.$donnees['date_creation'].'</i>';?><br/></h3>
+                        echo '<i> le '.$donnees['date_creation'].'</i> ID: '.$donnees['id']; ?><br/></h3>
                     <p><?php echo $donnees['contenu'] ?> <br/>
-                    <i><a href="commentaires.php">Commentaires</a></i>
-                    </p>
+                    <i><?php echo '<a href="commentaires.php?id="'.$donnees['id'].'>Commentaires</a>'; ?></i>
                 </div>
             <?php
         }
 
-        $reponse->closeCursor(); // Termine le traitement de la requête
+        $requete->closeCursor(); // Termine le traitement de la requête
         ?>
     </body>
 </html>
