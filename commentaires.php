@@ -1,24 +1,24 @@
-<!-- commentaires -->
+<!-- Commentaires -->
 
-<!-- index -->
-<!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" />
         <title>Blog - Commentaires</title>
-        <link href="blog.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="blog.css" />
+        <meta charset="utf-8" />
     </head>
-    <body>
-        <h1>Mon super blog !</h1>
-        <a href="index.php">Retour à la liste des billets</a>
-        
-        <div class="news">
-            <h3>Titre</h3>
-            <p>Paragraphe</p>
-        </div>
 
-        <h2>Commentaires</h2>
-        <p><strong>Détails</strong> des commentaires</p>
+    <body>
+        <!-- Connexion à la BDD "blog" -->
+        <?php
+        try
+        {
+            $bdd = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
+        }
+        catch (Exception $e)
+        {
+                die('Erreur : ' . $e->getMessage());
+        }
+
         
     </body>
 </html>
