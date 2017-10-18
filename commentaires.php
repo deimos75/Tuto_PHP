@@ -19,6 +19,10 @@
             $requeteBillets = $bdd->prepare('SELECT * FROM billets where id=:idParam');
             $requeteBillets->execute(array('idParam' => $_GET['id']));
             $donneesBillets = $requeteBillets->fetch();
+            if(empty($donneesBillets)){
+                header('Location: erreurBillet.php'); // Redirection
+                echo '<h2>ERREUR: il n\'y a pas de billet!</h2>';  
+            }
         ?>
         
         <!-- Affichage du billet sélectionné -->
@@ -39,8 +43,8 @@
             // Affichage des commentaires
             while ($donneesCommentaires = $requeteCommentaires->fetch()){
         ?>
-            <p><strong><?php echo $donneesCommentaires['auteur']?></strong> le <?php echo $donneesCommentaires['dateFR_commentaire']?></p>
-            <p><?php echo $donneesCommentaires['commentaire']?></p>
+                <p><strong><?php echo $donneesCommentaires['auteur']?></strong> le <?php echo $donneesCommentaires['dateFR_commentaire']?></p>
+                <p><?php echo $donneesCommentaires['commentaire']?></p>
         <?php
             }
             $requeteCommentaires->closeCursor();
