@@ -21,7 +21,6 @@
             $donneesBillets = $requeteBillets->fetch();
             if(empty($donneesBillets)){
                 header('Location: erreurBillet.php'); // Redirection
-                echo '<h2>ERREUR: il n\'y a pas de billet!</h2>';  
             }
         ?>
         
