@@ -75,35 +75,6 @@
             <input type="text" name="id_billetForm" id="id_billet" value="<?php echo $_GET['id']?>" style="visibility:hidden;"/><br>
             <input type="submit" value="Envoyer" />
         </form>
-            
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
     </body>
 </html>
