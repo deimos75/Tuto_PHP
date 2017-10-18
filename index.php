@@ -35,7 +35,7 @@
                     <h3><?php echo $donnees['titre']; 
                         echo '<i> le '.$donnees['date_creation'].'</i> ID: '.$donnees['id']; ?><br/></h3>
                     <p><?php echo $donnees['contenu'] ?> <br/>
-                    <i><?php echo '<a href="commentaires.php?id="'.$donnees['id'].'>Commentaires</a>'; ?></i>
+                    <i><?php echo '<a href="commentaires.php?id='.$donnees['id'].'">Commentaires</a>'; ?></i>
                 </div>
             <?php
         }
