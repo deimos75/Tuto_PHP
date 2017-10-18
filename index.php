@@ -8,18 +8,10 @@
     </head>
 
     <body>
-        <!-- Connexion à la BDD "blog" -->
         <?php
-        try
-        {   
-            $bdd = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));   
-        }
-        catch (Exception $e)
-        {
-                die('Erreur : ' . $e->getMessage());
-        }
-         
-
+        //Connexion à la BDD "blog"
+        include("connexionBDD.php");
+        
         // On récupère tout le contenu de la table "billets"
         $requete = $bdd->query('SELECT id, titre, contenu, DATE_FORMAT(date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS dateFR_creation FROM billets ORDER BY date_creation DESC LIMIT 0, 5');
         

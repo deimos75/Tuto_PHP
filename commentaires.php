@@ -8,61 +8,43 @@
     </head>
 
     <body>
-        <!-- Connexion à la BDD "blog" -->
-        <?php
-        try
-        {
-            $bdd = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
-        }
-        catch (Exception $e)
-        {
-                die('Erreur : ' . $e->getMessage());
-        }
-        ?>
-        
         <h1>Mon super blog</h1>
         <a href="index.php">Retour à la listes des billets</a><br>
+        
         <?php         
-            try
-                {   
-                    $bdd = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));   
-                }
-                catch (Exception $e)
-                {
-                        die('Erreur : ' . $e->getMessage());
-                }
-         
-                
-                // Table "billet" en fonction de l'id
-                $requeteBillets = $bdd->prepare('SELECT * FROM billets where id=:idParam');
-                $requeteBillets->execute(array('idParam' => $_GET['id']));
-                $donneesBillets = $requeteBillets->fetch();
+            //Connexion à la BDD "blog"        
+            include("connexionBDD.php");
+
+            // Table "billet" en fonction de l'id
+            $requeteBillets = $bdd->prepare('SELECT * FROM billets where id=:idParam');
+            $requeteBillets->execute(array('idParam' => $_GET['id']));
+            $donneesBillets = $requeteBillets->fetch();
         ?>
         
-                <!-- Affichage du billet sélectionné -->
-                <div class="news">
-                    <h3><?php echo $donneesBillets['titre']; 
-                        echo '<i> le '.$donneesBillets['date_creation'].'</i>'; ?><br/></h3>
-                    <p><?php echo $donneesBillets['contenu'] ?> <br/>
-                </div>
-                <h2>Commentaires</h2>
-            <?php
-                $requeteBillets->closeCursor();
-                
-                // Table "commentaires" en fonction de l'id
-                $requeteCommentaires = $bdd->prepare('SELECT auteur, commentaire, DATE_FORMAT(date_commentaire, \'%d/%m/%Y à %Hh%imin%ss\') AS dateFR_commentaire FROM commentaires where id_billet=:idParam ORDER BY date_commentaire');
-                $requeteCommentaires->execute(array('idParam' => $_GET['id']));
-    
-    
-                // Affichage des commentaires
-                while ($donneesCommentaires = $requeteCommentaires->fetch()){
-            ?>
-                    <p><strong><?php echo $donneesCommentaires['auteur']?></strong> le <?php echo $donneesCommentaires['dateFR_commentaire']?></p>
-                    <p><?php echo $donneesCommentaires['commentaire']?></p>
-            <?php
-                }
-                $requeteCommentaires->closeCursor();
-            ?>
+        <!-- Affichage du billet sélectionné -->
+        <div class="news">
+            <h3><?php echo $donneesBillets['titre']; 
+                echo '<i> le '.$donneesBillets['date_creation'].'</i>'; ?><br/></h3>
+            <p><?php echo $donneesBillets['contenu'] ?> <br/>
+        </div>
+        <h2>Commentaires</h2>
+        <?php
+            $requeteBillets->closeCursor();
+
+            // Table "commentaires" en fonction de l'id
+            $requeteCommentaires = $bdd->prepare('SELECT auteur, commentaire, DATE_FORMAT(date_commentaire, \'%d/%m/%Y à %Hh%imin%ss\') AS dateFR_commentaire FROM commentaires where id_billet=:idParam ORDER BY date_commentaire');
+            $requeteCommentaires->execute(array('idParam' => $_GET['id']));
+
+
+            // Affichage des commentaires
+            while ($donneesCommentaires = $requeteCommentaires->fetch()){
+        ?>
+            <p><strong><?php echo $donneesCommentaires['auteur']?></strong> le <?php echo $donneesCommentaires['dateFR_commentaire']?></p>
+            <p><?php echo $donneesCommentaires['commentaire']?></p>
+        <?php
+            }
+            $requeteCommentaires->closeCursor();
+        ?>
         
         <!-- Formulaire d'ajout -->
         <h2>Postez un commentaire</h2>
