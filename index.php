@@ -21,7 +21,10 @@
          
 
         // On récupère tout le contenu de la table "billets"
-        $requete = $bdd->query('SELECT * FROM billets ORDER BY id DESC');
+        $requete = $bdd->query('SELECT id, titre, contenu, DATE_FORMAT(date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS dateFR_creation FROM billets ORDER BY date_creation DESC LIMIT 0, 5');
+        
+        //$requete = $bdd->query('SELECT id, titre, contenu, date_creation FROM billets ORDER BY date_creation DESC LIMIT 0, 5');
+        
         ?>
         
         <h1>Mon super blog</h1>
@@ -32,9 +35,9 @@
         while ($donnees = $requete->fetch()){
             ?>
                 <div class="news">
-                    <h3><?php echo $donnees['titre']; 
-                        echo '<i> le '.$donnees['date_creation'].'</i> ID: '.$donnees['id']; ?><br/></h3>
-                    <p><?php echo $donnees['contenu'] ?> <br/>
+                    <h3><?php echo htmlspecialchars($donnees['titre']); 
+                        echo '<em> le '.$donnees['dateFR_creation'].'</em>'; ?><br/></h3>
+                    <p><?php echo htmlspecialchars($donnees['contenu']) ?> <br/>
                     <i><?php echo '<a href="commentaires.php?id='.$donnees['id'].'">Commentaires</a>'; ?></i>
                 </div>
             <?php
