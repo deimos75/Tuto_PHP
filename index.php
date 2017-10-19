@@ -17,10 +17,23 @@
         $nbBillets = $requeteNbBillet->fetch();
         $N_billets = $nbBillets[0];
         
-        // Nombre de page
+        // Nombre de page (5 billets par page)
         $N_pages = ceil($N_billets / 5);
         
         // On récupère tout le contenu de la table "billets"
+        // La requête doit s'adapter au numéro de page
+        if(isset($_GET['page'])){
+            $NumPage = $_GET['page'];    
+        }else{
+            $NumPage = 1;
+        }
+        $limitInf = $NumPage - 1;
+        $limitSup = $limitInf + 5;
+        echo 'NumPage : '.$NumPage;
+        echo '<br>limitInf : '.$limitInf;
+        echo '<br>limitSup : '.$limitSup;
+           
+           
         $requete = $bdd->query('SELECT id, titre, contenu, DATE_FORMAT(date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS dateFR_creation FROM billets ORDER BY date_creation DESC LIMIT 0, 5');
         ?>
         
@@ -43,5 +56,7 @@
 
         $requete->closeCursor(); // Termine le traitement de la requête
         ?>
+        <p>Page : <a href="index.php?page=1">1</a> </p>
+        
     </body>
 </html>
